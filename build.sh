@@ -1,3 +1,6 @@
+#suffix=$3 # e.g. -hardened
+#arch=$1
+busybox_version=$2
 # http://distfiles.gentoo.org/releases/x86/autobuilds/latest-stage3-i686-hardened.txt
 #dist="http://distfiles.gentoo.org/releases/${arch}/autobuilds/"
 #stage3="$(wget -q -O- ${dist}/latest-stage3-${busybox_version}${suffix}.txt | tail -n 1 | cut -f 1 -d ' ')"
