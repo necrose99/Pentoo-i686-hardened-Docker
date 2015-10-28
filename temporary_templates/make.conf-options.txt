@@ -1,0 +1,8 @@
+PORTAGE_BINHOST="http://pentoo.east.us.mirror.inerail.net/Packages/amd64-default/"
+http://pentoo.east.us.mirror.inerail.net/Packages/amd64-hardened/
+http://pentoo.east.us.mirror.inerail.net/Packages/x86-default/
+
+app-portage/
+conf-update
+
+FEATURES="buildpkg getbinpkg"

@@ -1,0 +1,81 @@
+https://hub.docker.com/r/hasufell/gentoo-amd64-paludis/~/dockerfile/
+
+https://hub.docker.com/r/gentoo/stage3-amd64-hardened/
+
+docker pull gentoo/stage3-amd64-hardened
+docker pull gentoo/portage
+
+EXPOSE 9306 9312
+
+CMD ["searchd", "--nodetach"]
+
+FROM wking/gentoo-layman
+MAINTAINER Lucas Bickel <hairmare@purplehaze.ch>
+
+RUN layman -a betagarden
+RUN echo 'app-portage/layman-add ~amd64' >> /etc/portage/package.accept_keywords/layman-add
+RUN emerge -v layman-add sudo
+RUN eselect news read new
+
+
+FROM hairmare/node
+Maintainer Lucas Bickel <hairmare@purplehaze.ch>
+
+# stage app
+
+COPY package.json /usr/local/src/ogc-proxy/package.json
+COPY README.md    /usr/local/src/ogc-proxy/README.md
+COPY ogc-proxy.js /usr/local/src/ogc-proxy/ogc-proxy.js
+
+# install app
+
+RUN cd /usr/local/src/ogc-proxy; npm install -g && chmod +x /usr/lib/node_modules/ogc-proxy/ogc-proxy.js
+
+# configure runtime
+
+ENTRYPOINT [ "node", "/usr/lib/node_modules/ogc-proxy/ogc-proxy.js" ]
+CMD ['--help']
+
+EXPOSE 80 443
+
+
+
+FROM sabayon/spinbase-amd64-squashed
+
+MAINTAINER mudler <mudler@sabayonlinux.org>
+
+# Perform post-upgrade tasks (mirror sorting, updating repository db)
+ADD ./script/post-upgrade.sh /post-upgrade.sh
+RUN /bin/bash /post-upgrade.sh  && rm -rf /post-upgrade.sh
+
+# Set environment variables.
+ENV HOME /root
+
+# Define working directory.
+WORKDIR /
+
+# Adding our builder script that will run also as entrypoint
+RUN wget 'https://raw.githubusercontent.com/mudler/sabayon-builder-script/master/builder' -O /builder && chmod +x /builder
+
+# Define standard volumes
+VOLUME ["/usr/portage", "/usr/portage/distfiles", "/usr/portage/packages", "/var/lib/entropy/client/packages"]
+
+# Define default command.
+ENTRYPOINT ["/builder"]
+
+
+FROM sabayon/builder-amd64
+
+# installing witchcraft
+RUN equo i sudo dev-perl/Class-Load dev-perl/Class-Load-XS dev-perl/List-MoreUtils dev-perl/DateTime-Local dev-perl/libwww-perl App-cpanminus && wget 'https://codeload.github.com/Spike-Pentesting/App-witchcraft/tar.gz/master' -O witchcraft.tar.gz && tar xvf witchcraft.tar.gz && cd App-witchcraft-master && cpanm --installdeps -n . && cpanm .
+
+# configuring witchcraft
+RUN mkdir -p /root/.witchcraft && cp -rfv /App-witchcraft-master/witchcraft.conf /root/.witchcraft/witchcraft.conf && sed -i s:pushbullet::g /root/.witchcraft/witchcraft.conf && sed -i s:Sabayon::g /root/.witchcraft/witchcraft.conf && rm -rfv /App-witchcraft-master
+
+FROM wking/gentoo-layman
+MAINTAINER Lucas Bickel <hairmare@purplehaze.ch>
+
+RUN layman -a betagarden
+RUN echo 'app-portage/layman-add ~amd64' >> /etc/portage/package.accept_keywords/layman-add
+RUN emerge -v layman-add sudo
+RUN eselect news read new
