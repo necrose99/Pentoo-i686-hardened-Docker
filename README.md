@@ -2,6 +2,7 @@
 Pentoo_i686_hardened_Docker
 
 **notes still very (pre) ALPHA **
+*** other Need to add wiki or reformat in html Kinda All thumbs with MD** HTML4/5 I get even though it is more verbose its more natuaral. 
 ### 
 with Gentoo add LXC and Docker 
 IE Emerge LXC and DOCKER 
