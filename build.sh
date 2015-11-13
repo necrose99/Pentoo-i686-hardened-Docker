@@ -7,6 +7,9 @@ busybox_version=$2
 mkdir newWorldOrder; cd newWorldOrder
 echo "Downloading and extracting ${stage3}..."
 wget -q -c "ftp://pentoo.west.us.mirror.inerail.net/pentoo/Pentoo_x86_hardened/pentoo-x86-hardened-2015.0_RC4.2.iso"
+wget -q -c "https://raw.githubusercontent.com/necrose99/Pentoo-i686-hardened-Docker/master/script/make.conf"
+mv make.conf /newWorldOrder/root/make.conf_testing
+echo "Sabayon Linux Styled Make.conf Adapated for Pentoo, a few typo's, \r with a well orignized package flag/s its easy on the eyes \r enjoy"
 7z e -r pentoo-x86-hardened-2015.0_RC4.2.iso
 rm -f pentoo-x86-hardened-2015.0_RC4.2.iso syslinux.cfg README.txt livecd
 rm -r isolinux
@@ -25,11 +28,8 @@ cd /
 #commit suicide
 /busybox rm -rf newWorldOrder /busybox /build.sh /linuxrc
 
-
-
-
 # Self destruct
 rm -f /Dockerfile /build.sh
 
-echo "Bootstrapped ${stage3} into /:"
+echo "Bootstrapped  Pentoo-686-hardend into /:"
 ls --color -lah
