@@ -6,7 +6,7 @@ busybox_version=$2
 
 mkdir newWorldOrder; cd newWorldOrder
 echo "Downloading and extracting ${stage3}..."
-wget -q -c "ftp://pentoo.west.us.mirror.inerail.net/pentoo/Pentoo_x86_hardened/pentoo-x86-hardened-2015.0_RC4.2.iso"
+wget -q -c "http://pentoo.east.us.mirror.inerail.net/Pentoo_amd64_default/pentoo-amd64-default-2015.0_RC4.2.iso"
 wget -q -c "https://raw.githubusercontent.com/necrose99/Pentoo-i686-hardened-Docker/master/script/make.conf"
 mv make.conf /newWorldOrder/root/make.conf_testing
 echo "Sabayon Linux Styled Make.conf Adapated for Pentoo, a few typo's (will fix soon), \r with a well orignized package flag/s its easy on the eyes \r enjoy"
