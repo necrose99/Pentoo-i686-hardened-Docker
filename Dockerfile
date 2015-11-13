@@ -1,6 +1,6 @@
 FROM 32bit/debian:jessie
 
-MAINTAINER Gentoo Docker Team
+MAINTAINER Necrose99
 
 #ADD http://www.busybox.net/downloads/binaries/latest/busybox-i686 /busybox
 
