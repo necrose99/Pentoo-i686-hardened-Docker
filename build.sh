@@ -8,8 +8,13 @@ mkdir newWorldOrder; cd newWorldOrder
 echo "Downloading and extracting ${stage3}..."
 wget -q -c "ftp://pentoo.west.us.mirror.inerail.net/pentoo/Pentoo_x86_hardened/pentoo-x86-hardened-2015.0_RC4.2.iso"
 7z e -r pentoo-x86-hardened-2015.0_RC4.2.iso
-rm -f pentoo-x86-hardened-2015.0_RC4.2.iso
-sudo unsquashfs -f -d
+rm -f pentoo-x86-hardened-2015.0_RC4.2.iso syslinux.cfg README.txt livecd
+rm -r isolinux
+unsquashfs -f -d /newWorldOrder /newWorldOrder/image.squashfs
+unsquashfs -f -d /newWorldOrder/newWorldOrder/portage-20151029.lzm  
+unsquashfs -f -d /newWorldOrder/newWorldOrder/pentoo_overlay-20151029.lzm
+rm -f *.lzm
+cd modules && mv /newWorldOrder
 wget -q -O /busybox "http://www.busybox.net/downloads/binaries/latest/busybox-${busybox_version}"
 chmod +x /busybox
 /busybox rm -rf /lib* /usr /var /bin /sbin /opt /mnt /media /root /home /run /tmp
