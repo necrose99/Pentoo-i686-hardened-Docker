@@ -10,7 +10,7 @@ ADD build.sh /
 RUN apt-get update && apt-get install -y \
 	wget bzip2 squashfs-tools p7zip-full
 
-RUN /build.sh x86 i686-hardened
+RUN /build.sh
 
 # Setup the (virtually) current runlevel
 RUN echo "default" > /run/openrc/softlevel
