@@ -37,3 +37,4 @@ rm -f /Dockerfile /build.sh
 
 echo "Bootstrapped  Pentoo-686-hardend into /:"
 ls --color -lah
+pentoo-updater
