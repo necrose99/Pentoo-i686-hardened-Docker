@@ -22,5 +22,5 @@ RUN echo "unpacking Squashfile and modules"
 RUN unsquashfs -f -d / /image.squashfs
 RUN unsquashfs -f -d / /*.lzm 
 RUN rm *.lzm && rm *.squashfs && rm -rf /pentoo_tmp/
-RUN eslect profile set pentoo:pentoo/hardened/linux/amd64/bleeding_edge
+RUN eslect profile set pentoo:pentoo/hardened/linux/x86/bleeding_edge
 RUN pentoo-updater
